@@ -48,7 +48,6 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(package! spacemacs-theme)
 (package! org-thrill :recipe (:host github :repo "thrimbda/org-thrill"))
 (package! nano-emacs :recipe (:host github :repo "rougier/nano-emacs"))
 (package! mixed-pitch)
@@ -63,6 +62,7 @@
 
 ;; oh citre for ctags
 (package! citre)
+(package! visual-fill-column)
 
 ;; Jsonnet
 (package! jsonnet-mode)
