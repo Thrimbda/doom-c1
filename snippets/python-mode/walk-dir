@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: walk_dir
+# key: /wd
+# --
+
+def walk_path(path: Path, work: Callable[[Path], Any], cond: Callable[[Path], bool]) -> Iterable[Any]:
+    """a lazy function will not do anything until a decent for loop was applied"""
+
+    if not path.is_dir():
+        return [work(path)] if cond(path) else []
+
+    return (
+        result
+        for child in path.iterdir()
+        for result in walk_path(child, work, cond)
+    )
