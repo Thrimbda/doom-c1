@@ -165,11 +165,11 @@ when exporting org-mode to md."
 ;; they are implemented.
 
 ;; Font related
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
-      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 24)
-      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 14)
-      doom-unicode-font (font-spec :family "等距更纱黑体 SC" :size 14)
-      doom-serif-font (font-spec :family "FiraCode Nerd Font" :size 12))
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 10)
+      doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 20)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font Mono" :size 10)
+      doom-unicode-font (font-spec :family "等距更纱黑体 SC" :size 12)
+      doom-serif-font (font-spec :family "FiraCode Nerd Font Mono" :size 10))
 
 (defvar required-fonts '("FiraCode Nerd Font"))
 
@@ -250,16 +250,16 @@ when exporting org-mode to md."
   (default-input-method "rime")
   )
 
-(after! rime
-  (when (eq system-type 'darwin)
-    (rime-librime-root "~/.emacs.d/librime/dist"))
-  ;; FIXME: find a way to detect if nixos
-  (when (eq system-type 'gnu/linux)
-    (setq rime-emacs-module-header-root (file-truename (concat (file-name-directory (directory-file-name invocation-directory)) "/include")))
-    (setq rime-librime-root (shell-command-to-string "nix eval --raw --impure --expr '(let pkgs = import <nixpkgs> {}; in with pkgs; lib.getLib librime)'"))
-    (setq rime-share-data-dir (concat (shell-command-to-string "nix eval --raw --impure --expr '(let pkgs = import <nixpkgs> {}; in with pkgs; lib.getLib brise)'") "/share/rime-data"))
-    )
-  )
+; (after! rime
+;   (when (eq system-type 'darwin)
+;     (rime-librime-root "~/.emacs.d/librime/dist"))
+;   ;; FIXME: find a way to detect if nixos
+;   (when (eq system-type 'gnu/linux)
+;     (setq rime-emacs-module-header-root (file-truename (concat (file-name-directory (directory-file-name invocation-directory)) "/include")))
+;     (setq rime-librime-root (shell-command-to-string "nix eval --raw --impure --expr '(let pkgs = import <nixpkgs> {}; in with pkgs; lib.getLib librime)'"))
+;     (setq rime-share-data-dir (concat (shell-command-to-string "nix eval --raw --impure --expr '(let pkgs = import <nixpkgs> {}; in with pkgs; lib.getLib brise)'") "/share/rime-data"))
+;     )
+;   )
 
 ;; max-size
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
