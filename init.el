@@ -20,14 +20,17 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company           ; the ultimate code completion backend
-        +childframe)
+       ;; (company           ; the ultimate code completion backend
+        ;; +childframe)
        ;; (helm              ; the *other* search engine for love and life
        ;;  :lang org)
        ;;ido               ; the other *other* search engine...
-       (ivy               ; a search engine for love and life
-        +icons
-        +prescient)
+       corfu
+       ;; (ivy               ; a search engine for love and life
+       ;;  +icons
+       ;;  +prescient)
+       (vertico
+        +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -39,8 +42,8 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
-       (ligatures
-        +fira)         ; ligatures and symbols to make your code pretty again
+       (ligatures)
+        ;; +extra)            ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink cursor line after big motions
@@ -50,7 +53,8 @@
        ;;tabs              ; a tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
-       vc-gutter         ; vcs diff in the fringe
+       (vc-gutter         ; vcs diff in the fringe
+        +pretty)
        ;;vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        (window-select     ; visually switch windows
         +numbers)
@@ -61,7 +65,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format)  ; automated prettiness
+       (format)  ; automated prettinesa
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -72,7 +76,8 @@
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired             ; making dired pretty [functional]
+       (dired             ; making dired pretty [functional]
+        +icons)
        electric          ; smarter, keyword-based electric-indent
        (ibuffer         ; interactive buffer management
         +icons)
@@ -87,15 +92,15 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       (:if (executable-find "aspell")
-        (spell +flyspell)) ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       ;; (:if (executable-find "aspell")
+       ;;  (spell +flyspell)) ; tasing you for misspelling mispelling
+       grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       docker
+       ;; docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -109,7 +114,7 @@
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       rgb               ; creating color strings
+       ;; rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -138,9 +143,9 @@
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
-       (go                 ; the hipster dialect
+       ;; (go                 ; the hipster dialect
         ;; +lsp
-        )
+        ;; )
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
@@ -160,26 +165,27 @@
        ;;nim               ; python + lisp at the speed of c
        nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +pretty)     ; organize your plain life in plain text
+       (org)
+        ;; +pretty)     ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python            ; beautiful is better than ugly
-        +lsp
-        +pyright
-        )
+       ;; (python            ; beautiful is better than ugly
+       ;;  +lsp
+       ;;  +pyright
+       ;;  )
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-        +lsp
-        )
-       (scala             ; java, but good
-        +lsp
-        )
+       ;; (rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;  +lsp
+       ;;  )
+       ;; (scala             ; java, but good
+       ;;  +lsp
+       ;;  )
        scheme            ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
@@ -200,7 +206,7 @@
        ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
-       twitter           ; twitter client https://twitter.com/vnought
+       ;; twitter           ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate

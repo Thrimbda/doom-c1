@@ -48,26 +48,24 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+;; (package! org-mode :pin "d3a9c424ba32382fff1da4f4ecb447dc99205261") ;; for the fix of 'org-encode-time'
+;; (package! nano-emacs :recipe (:host github :repo "rougier/nano-emacs"))
 (package! org-thrill :recipe (:host github :repo "thrimbda/org-thrill"))
-(package! nano-emacs :recipe (:host github :repo "rougier/nano-emacs"))
 (package! mixed-pitch)
 (package! org-appear :recipe (:host github :repo "awth13/org-appear"))
 ;; (package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! pretty-mode)
-(package! org-books :recipe (:host github :repo "lepisma/org-books"))
-(package! calibredb)
-(package! nov)
 (package! benchmark-init)
 ;; (package! org-chef)
 
 ;; oh citre for ctags
-(package! citre)
 (package! visual-fill-column)
-
-;; Jsonnet
-(package! jsonnet-mode)
 
 ;; rime
 (package! rime)
 
-;; (package! org-trello)
+;; copilot
+;; (package! editorconfig)
+;; (package! jsonrpc)
+;; (package! copilot
+;;   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))

@@ -25,7 +25,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-vibrant)
+(setq doom-theme 'doom-city-lights)
+;; (after! doom-themes
+;;   (load-theme 'doom-nano-light t))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -167,8 +169,8 @@ when exporting org-mode to md."
 ;; Font related
 (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 10)
       doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 20)
-      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font Mono" :size 10)
-      doom-unicode-font (font-spec :family "等距更纱黑体 SC" :size 12)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font Mono" :size 10 :weight 'extra-bold)
+      doom-symbol-font (font-spec :family "更纱黑体 Mono SC Nerd" :size 12)
       doom-serif-font (font-spec :family "FiraCode Nerd Font Mono" :size 10))
 
 (defvar required-fonts '("FiraCode Nerd Font"))
@@ -201,6 +203,10 @@ when exporting org-mode to md."
                        (sleep-for 0.5)))))
   ";; No missing fonts detected")
 
+;; ;; aspell
+;; (after! flyspell-mode
+;;   (setq ispell-dictionary "en_US"))
+
 (setq-default fill-column 72)
 
 ;; org related
@@ -208,30 +214,10 @@ when exporting org-mode to md."
   ;; (setq org-startup-indented nil)
   (setq org-modules '(org-habit ol-bibtex))
   (add-hook! 'org-mode-hook #'auto-fill-mode)
-  (use-package! org-thrill)
-  (use-package! org-books))
+  (load! "bh-org.el"))
 
 (after! org-books
   (setq org-books-file "~/OneDrive/books.org"))
-
-;; jsonnet
-(use-package! jsonnet-mode)
-
-;; citre
-(use-package citre
-  :defer t
-  :init
-  (require 'citre-config)
-  :config
-  (defun prog-mode-citre-bindings()
-    (local-set-key (kbd "C-M-]") 'citre-jump)
-    (local-set-key (kbd "C-M-t") 'citre-jump-back)
-    (local-set-key (kbd "C-M-p") 'citre-peek)
-    (local-set-key (kbd "C-M-i") 'custom-citre-completion-at-point)
-    )
-  (add-hook 'go-mode-hook 'prog-mode-citre-bindings)
-  ;; (add-hook 'c-mode-hook 'prog-mode-citre-bindings)
-)
 
 ;; rime
 (use-package! rime
@@ -272,141 +258,6 @@ when exporting org-mode to md."
 ;; (after! doom-modeline
 ;;   (doom-modeline-def-modeline 'main
 ;;     '(bar)))
-
-;; ebooks
-(use-package! calibredb
-  :commands calibredb
-  :config
-  (setq calibredb-root-dir "~/Calibre"
-        calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-  (map! :map calibredb-show-mode-map
-        :ne "?" #'calibredb-entry-dispatch
-        :ne "o" #'calibredb-find-file
-        :ne "O" #'calibredb-find-file-other-frame
-        :ne "V" #'calibredb-open-file-with-default-tool
-        :ne "s" #'calibredb-set-metadata-dispatch
-        :ne "e" #'calibredb-export-dispatch
-        :ne "q" #'calibredb-entry-quit
-        :ne "." #'calibredb-open-dired
-        :ne [tab] #'calibredb-toggle-view-at-point
-        :ne "M-t" #'calibredb-set-metadata--tags
-        :ne "M-a" #'calibredb-set-metadata--author_sort
-        :ne "M-A" #'calibredb-set-metadata--authors
-        :ne "M-T" #'calibredb-set-metadata--title
-        :ne "M-c" #'calibredb-set-metadata--comments)
-  (map! :map calibredb-search-mode-map
-        :ne [mouse-3] #'calibredb-search-mouse
-        :ne "RET" #'calibredb-find-file
-        :ne "?" #'calibredb-dispatch
-        :ne "a" #'calibredb-add
-        :ne "A" #'calibredb-add-dir
-        :ne "c" #'calibredb-clone
-        :ne "d" #'calibredb-remove
-        :ne "D" #'calibredb-remove-marked-items
-        :ne "j" #'calibredb-next-entry
-        :ne "k" #'calibredb-previous-entry
-        :ne "l" #'calibredb-virtual-library-list
-        :ne "L" #'calibredb-library-list
-        :ne "n" #'calibredb-virtual-library-next
-        :ne "N" #'calibredb-library-next
-        :ne "p" #'calibredb-virtual-library-previous
-        :ne "P" #'calibredb-library-previous
-        :ne "s" #'calibredb-set-metadata-dispatch
-        :ne "S" #'calibredb-switch-library
-        :ne "o" #'calibredb-find-file
-        :ne "O" #'calibredb-find-file-other-frame
-        :ne "v" #'calibredb-view
-        :ne "V" #'calibredb-open-file-with-default-tool
-        :ne "." #'calibredb-open-dired
-        :ne "b" #'calibredb-catalog-bib-dispatch
-        :ne "e" #'calibredb-export-dispatch
-        :ne "r" #'calibredb-search-refresh-and-clear-filter
-        :ne "R" #'calibredb-search-clear-filter
-        :ne "q" #'calibredb-search-quit
-        :ne "m" #'calibredb-mark-and-forward
-        :ne "f" #'calibredb-toggle-favorite-at-point
-        :ne "x" #'calibredb-toggle-archive-at-point
-        :ne "h" #'calibredb-toggle-highlight-at-point
-        :ne "u" #'calibredb-unmark-and-forward
-        :ne "i" #'calibredb-edit-annotation
-        :ne "DEL" #'calibredb-unmark-and-backward
-        :ne [backtab] #'calibredb-toggle-view
-        :ne [tab] #'calibredb-toggle-view-at-point
-        :ne "M-n" #'calibredb-show-next-entry
-        :ne "M-p" #'calibredb-show-previous-entry
-        :ne "/" #'calibredb-search-live-filter
-        :ne "M-t" #'calibredb-set-metadata--tags
-        :ne "M-a" #'calibredb-set-metadata--author_sort
-        :ne "M-A" #'calibredb-set-metadata--authors
-        :ne "M-T" #'calibredb-set-metadata--title
-        :ne "M-c" #'calibredb-set-metadata--comments))
-
-(use-package! nov
-  :mode ("\\.epub\\'" . nov-mode)
-  :config
-  (map! :map nov-mode-map
-        :n "RET" #'nov-scroll-up)
-
-  (defun doom-modeline-segment--nov-info ()
-    (concat
-     " "
-     (propertize
-      (cdr (assoc 'creator nov-metadata))
-      'face 'doom-modeline-project-parent-dir)
-     " "
-     (cdr (assoc 'title nov-metadata))
-     " "
-     (propertize
-      (format "%d/%d"
-              (1+ nov-documents-index)
-              (length nov-documents))
-      'face 'doom-modeline-info)))
-
-  (advice-add 'nov-render-title :override #'ignore)
-
-  (defun +nov-mode-setup ()
-    (face-remap-add-relative 'variable-pitch
-                             :family "Merriweather"
-                             :height 1.4
-                             :width 'semi-expanded)
-    (face-remap-add-relative 'default :height 1.3)
-    (setq-local line-spacing 0.2
-                next-screen-context-lines 4
-                shr-use-colors nil)
-    (require 'visual-fill-column nil t)
-    (setq-local visual-fill-column-center-text t
-                visual-fill-column-width 180
-                nov-text-width 80
-                )
-    (visual-fill-column-mode 1)
-    (hl-line-mode -1)
-
-    (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition)
-
-    (setq-local mode-line-format
-                `((:eval
-                   (doom-modeline-segment--workspace-name))
-                  (:eval
-                   (doom-modeline-segment--window-number))
-                  (:eval
-                   (doom-modeline-segment--nov-info))
-                  ,(propertize
-                    " %P "
-                    'face 'doom-modeline-buffer-minor-mode)
-                  ,(propertize
-                    " "
-                    'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive)
-                    'display `((space
-                                :align-to
-                                (- (+ right right-fringe right-margin)
-                                   ,(* (let ((width (doom-modeline--font-width)))
-                                         (or (and (= width 1) 1)
-                                             (/ width (frame-char-width) 1.0)))
-                                       (string-width
-                                        (format-mode-line (cons "" '(:eval (doom-modeline-segment--major-mode))))))))))
-                  (:eval (doom-modeline-segment--major-mode)))))
-
-  (add-hook 'nov-mode-hook #'+nov-mode-setup))
 
 ;; title
 (after! projectile
