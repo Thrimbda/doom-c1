@@ -51,6 +51,7 @@
 ;; Org/Norang focused extras used by config.el.
 (package! mixed-pitch)
 (package! org-appear :recipe (:host github :repo "awth13/org-appear"))
+(package! visual-fill-column)
 
 ;; Chinese input method.
 (package! rime)

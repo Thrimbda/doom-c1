@@ -9,15 +9,25 @@
        :ui
        doom
        dashboard
+       hl-todo
+       (ligatures)
        modeline
+       ophints
        (popup +defaults)
+       (vc-gutter +pretty)
+       (window-select +numbers)
+       workspaces
 
        :editor
        (evil +everywhere)
+       file-templates
+       fold
+       snippets
 
        :emacs
-       dired
-       ibuffer
+       (dired +icons)
+       electric
+       (ibuffer +icons)
        undo
 
        :os
@@ -30,4 +40,4 @@
        sh
 
        :config
-       (default +bindings))
+       (default +bindings +smartparens))
