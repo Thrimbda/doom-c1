@@ -8,6 +8,7 @@
 
        :ui
        doom
+       dashboard
        modeline
        (popup +defaults)
 
