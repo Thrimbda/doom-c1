@@ -1,5 +1,7 @@
 ;; Based on BH org-mode.org 2023.05
 
+(require 'cl-lib)
+
 ;; The following setting is different from the document so that you
 ;; can override the document path by setting your path in the variable
 ;; org-mode-user-lisp-path
@@ -14,7 +16,7 @@
 ;; Standard key bindings
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cb" 'org-switchb)
 
 ;; The following setting is different from the document so that you
 ;; can override the document org-agenda-files by setting your
@@ -826,12 +828,10 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
          (dot . t)
          ;; (ditaa . t)
          (python . t)
-         (shell . t)
-         (sh . t)
-         (ledger . t)
-         (org . t)
-         (ammonite . t)
-         (latex . t))))
+        (shell . t)
+        (ledger . t)
+        (org . t)
+        (latex . t))))
 
 ; Do not prompt to confirm evaluation
 ; This may be dangerous - make sure you understand the consequences
@@ -1092,13 +1092,13 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (defvar bh/plantuml-if-count 0)
 
 (defun bh/plantuml-if () 
-  (incf bh/plantuml-if-count)
+  (cl-incf bh/plantuml-if-count)
   (number-to-string bh/plantuml-if-count))
 
 (defvar bh/plantuml-loop-count 0)
 
 (defun bh/plantuml-loop () 
-  (incf bh/plantuml-loop-count)
+  (cl-incf bh/plantuml-loop-count)
   (number-to-string bh/plantuml-loop-count))
 
 (defun bh/plantuml-reset-counters ()
@@ -1554,7 +1554,9 @@ so change the default 'F' binding in the agenda to allow both"
 (setq org-log-into-drawer t)
 (setq org-log-state-notes-insert-after-drawers nil)
 
-(setq org-clock-sound "/usr/local/lib/tngchime.wav")
+(let ((bh-clock-sound "/usr/local/lib/tngchime.wav"))
+  (setq org-clock-sound (and (file-exists-p bh-clock-sound)
+                             bh-clock-sound)))
 
 ; Enable habit tracking (and a bunch of other modules)
 ;; ISSUE: comment out unused modules
@@ -1849,6 +1851,4 @@ so change the default 'F' binding in the agenda to allow both"
 
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 
-
-; (provide 'org-thrill)
 ;;; bh-org.el ends here
