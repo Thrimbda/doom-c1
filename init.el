@@ -12,6 +12,9 @@
        modeline
        (popup +defaults)
 
+       :editor
+       (evil +everywhere)
+
        :emacs
        dired
        ibuffer
