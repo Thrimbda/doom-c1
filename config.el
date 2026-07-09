@@ -67,9 +67,6 @@
   ;; needs to be run after other hooks have acted.
   (run-at-time nil nil #'org-appear--set-elements))
 
-(use-package! org-pretty-table
-  :commands (org-pretty-table-mode global-org-pretty-table-mode))
-
 (setq org-export-headline-levels 5)
 
 (defun org-export-filter-text-acronym (text backend _info)
@@ -146,7 +143,7 @@ when exporting org-mode to md."
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'visual)
+(setq display-line-numbers-type nil)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -216,9 +213,6 @@ when exporting org-mode to md."
   (add-hook! 'org-mode-hook #'auto-fill-mode)
   (load! "bh-org.el"))
 
-(after! org-books
-  (setq org-books-file "~/OneDrive/books.org"))
-
 ;; rime
 (use-package! rime
   :config
@@ -250,24 +244,10 @@ when exporting org-mode to md."
 ;; max-size
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; (when doom-debug-p
-;;   (require 'benchmark-init)
-;;   (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
-
 ;; modeline tweaks
 ;; (after! doom-modeline
 ;;   (doom-modeline-def-modeline 'main
 ;;     '(bar)))
-
-;; title
-(after! projectile
-  (setq frame-title-format
-        '("%b"
-          (:eval
-           (let ((project-name (projectile-project-name)))
-             (unless (string= "-" project-name)
-               (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
-  )
 
 ;; profile
 ;; config.el ends here
