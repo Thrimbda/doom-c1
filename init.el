@@ -36,7 +36,7 @@
 
        :lang
        emacs-lisp
-       (org +crypt)
+       (org +crypt +pretty)
        sh
 
        :config

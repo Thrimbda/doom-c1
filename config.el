@@ -36,6 +36,10 @@
 (setq org-export-in-background t)
 (setq org-catch-invisible-edits 'smart)
 (setq org-use-sub-superscripts '{})
+;; Org's element cache can occasionally warn and reset while editing.  Prefer a
+;; stable Org/Norang workflow over parser-cache speed.
+(setq org-element-use-cache nil
+      org-element-cache-persistent nil)
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
 (custom-set-faces!
