@@ -213,7 +213,16 @@ when exporting org-mode to md."
 ;; org related
 (after! org
   ;; (setq org-startup-indented nil)
-  (setq org-modules '(org-habit ol-bibtex))
+  (setq org-modules '(org-habit ol-bibtex)
+        org-agenda-window-setup 'other-window
+        org-agenda-restore-windows-after-quit t)
+  (add-to-list 'display-buffer-alist
+               '("\\*Org Agenda.*\\*"
+                 (display-buffer-in-side-window)
+                 (side . right)
+                 (slot . 0)
+                 (window-width . 0.42)
+                 (window-parameters . ((no-delete-other-windows . t)))))
   (add-hook! 'org-mode-hook #'auto-fill-mode)
   (load! "bh-org.el"))
 
