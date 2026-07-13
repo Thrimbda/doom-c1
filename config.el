@@ -274,6 +274,11 @@ when exporting org-mode to md."
   (define-key org-agenda-mode-map [tab]
               #'c1/org-agenda-goto-in-existing-window))
 
+(after! evil-org-agenda
+  (evil-define-key* 'motion evil-org-agenda-mode-map
+    (kbd "TAB") #'c1/org-agenda-goto-in-existing-window
+    (kbd "<tab>") #'c1/org-agenda-goto-in-existing-window))
+
 ;; rime
 (use-package! rime
   :config
