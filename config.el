@@ -211,6 +211,34 @@ when exporting org-mode to md."
 (setq-default fill-column 72)
 
 ;; org related
+(defvar c1/org-agenda-target-window nil)
+
+(defun c1/display-org-agenda-buffer (buffer alist)
+  "Display BUFFER on the right and remember the originating window."
+  (let ((origin-window (selected-window))
+        (agenda-window (display-buffer-in-side-window buffer alist)))
+    (unless (window-parameter origin-window 'window-side)
+      (set-window-parameter agenda-window
+                            'c1/org-agenda-origin-window
+                            origin-window))
+    agenda-window))
+
+(defun c1/display-buffer-in-org-agenda-origin (buffer _alist)
+  "Display BUFFER in the window from which the agenda was opened."
+  (when (window-live-p c1/org-agenda-target-window)
+    (set-window-buffer c1/org-agenda-target-window buffer)
+    c1/org-agenda-target-window))
+
+(defun c1/org-agenda-goto-in-origin-window ()
+  "Visit the agenda item in the window to the left of the agenda."
+  (interactive)
+  (let ((c1/org-agenda-target-window
+         (window-parameter (selected-window)
+                           'c1/org-agenda-origin-window))
+        (display-buffer-overriding-action
+         '((c1/display-buffer-in-org-agenda-origin))))
+    (org-agenda-goto)))
+
 (after! org
   ;; (setq org-startup-indented nil)
   (setq org-modules '(org-habit ol-bibtex)
@@ -218,13 +246,19 @@ when exporting org-mode to md."
         org-agenda-restore-windows-after-quit t)
   (add-to-list 'display-buffer-alist
                '("\\*Org Agenda.*\\*"
-                 (display-buffer-in-side-window)
+                 (c1/display-org-agenda-buffer)
                  (side . right)
                  (slot . 0)
                  (window-width . 0.42)
                  (window-parameters . ((no-delete-other-windows . t)))))
   (add-hook! 'org-mode-hook #'auto-fill-mode)
   (load! "bh-org.el"))
+
+(after! org-agenda
+  (define-key org-agenda-mode-map (kbd "TAB")
+              #'c1/org-agenda-goto-in-origin-window)
+  (define-key org-agenda-mode-map [tab]
+              #'c1/org-agenda-goto-in-origin-window))
 
 ;; rime
 (use-package! rime
