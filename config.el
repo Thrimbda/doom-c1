@@ -223,20 +223,34 @@ when exporting org-mode to md."
                             origin-window))
     agenda-window))
 
-(defun c1/display-buffer-in-org-agenda-origin (buffer _alist)
-  "Display BUFFER in the window from which the agenda was opened."
-  (when (window-live-p c1/org-agenda-target-window)
-    (set-window-buffer c1/org-agenda-target-window buffer)
-    c1/org-agenda-target-window))
+(defun c1/display-buffer-for-org-agenda-goto (buffer _alist)
+  "Reuse an existing window for BUFFER when jumping from the agenda."
+  (let ((target-window
+         (or (get-buffer-window buffer (selected-frame))
+             (and (window-live-p c1/org-agenda-target-window)
+                  (eq (window-frame c1/org-agenda-target-window)
+                      (selected-frame))
+                  (not (window-parameter c1/org-agenda-target-window
+                                         'window-side))
+                  c1/org-agenda-target-window)
+             (catch 'main-window
+               (dolist (window (window-list nil 'no-minibuf))
+                 (when (and (not (eq window (selected-window)))
+                            (not (window-parameter window 'window-side)))
+                   (throw 'main-window window)))))))
+    (when target-window
+      (unless (eq (window-buffer target-window) buffer)
+        (set-window-buffer target-window buffer))
+      target-window)))
 
-(defun c1/org-agenda-goto-in-origin-window ()
-  "Visit the agenda item in the window to the left of the agenda."
+(defun c1/org-agenda-goto-in-existing-window ()
+  "Visit the agenda item in an existing window without splitting."
   (interactive)
   (let ((c1/org-agenda-target-window
          (window-parameter (selected-window)
                            'c1/org-agenda-origin-window))
         (display-buffer-overriding-action
-         '((c1/display-buffer-in-org-agenda-origin))))
+         '((c1/display-buffer-for-org-agenda-goto))))
     (org-agenda-goto)))
 
 (after! org
@@ -256,9 +270,9 @@ when exporting org-mode to md."
 
 (after! org-agenda
   (define-key org-agenda-mode-map (kbd "TAB")
-              #'c1/org-agenda-goto-in-origin-window)
+              #'c1/org-agenda-goto-in-existing-window)
   (define-key org-agenda-mode-map [tab]
-              #'c1/org-agenda-goto-in-origin-window))
+              #'c1/org-agenda-goto-in-existing-window))
 
 ;; rime
 (use-package! rime
