@@ -214,9 +214,13 @@ when exporting org-mode to md."
 (defvar c1/org-agenda-target-window nil)
 
 (defun c1/org-enable-soft-wrap-h ()
-  "Use visual wrapping in Org buffers without inserting newlines."
+  "Soft-wrap Org buffers at `fill-column' without inserting newlines."
+  (require 'visual-fill-column)
   (auto-fill-mode -1)
-  (visual-line-mode 1))
+  (visual-line-mode 1)
+  (setq-local visual-fill-column-width fill-column
+              visual-fill-column-center-text nil)
+  (visual-fill-column-mode 1))
 
 (defun c1/display-org-agenda-buffer (buffer alist)
   "Display BUFFER on the right and remember the originating window."
