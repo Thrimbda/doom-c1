@@ -213,6 +213,11 @@ when exporting org-mode to md."
 ;; org related
 (defvar c1/org-agenda-target-window nil)
 
+(defun c1/org-enable-soft-wrap-h ()
+  "Use visual wrapping in Org buffers without inserting newlines."
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
+
 (defun c1/display-org-agenda-buffer (buffer alist)
   "Display BUFFER on the right and remember the originating window."
   (let ((origin-window (selected-window))
@@ -265,8 +270,12 @@ when exporting org-mode to md."
                  (slot . 0)
                  (window-width . 0.42)
                  (window-parameters . ((no-delete-other-windows . t)))))
-  (add-hook! 'org-mode-hook #'auto-fill-mode)
-  (load! "bh-org.el"))
+  (add-hook! 'org-mode-hook #'c1/org-enable-soft-wrap-h)
+  (load! "bh-org.el")
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when (derived-mode-p 'org-mode)
+        (c1/org-enable-soft-wrap-h)))))
 
 (after! org-agenda
   (define-key org-agenda-mode-map (kbd "TAB")
